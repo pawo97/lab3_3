@@ -26,4 +26,12 @@ public class OrderTest1 {
         order.confirm();
     }
 
+    @Test(expected = OrderExpiredException.class)
+    public void isReturnExceptionWithTwentyFourHourse() {
+        fakeClock.addDateToReturn(2019, 6, 6, 6, 6);
+        fakeClock.addDateToReturn(2019, 6, 7, 7, 6);
+        order.submit();
+        order.confirm();
+    }
+
 }
