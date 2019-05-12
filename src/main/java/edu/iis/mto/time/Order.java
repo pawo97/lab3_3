@@ -12,11 +12,11 @@ public class Order {
     private State orderState;
     private List<OrderItem> items = new ArrayList<>();
     private DateTime subbmitionDate;
-    private FakeClock fakeClock;
+    private Clock clock;
 
-    public Order(FakeClock fakeClock) {
+    public Order(Clock clock) {
         orderState = State.CREATED;
-        this.fakeClock = fakeClock;
+        this.clock = clock;
     }
 
     public void addItem(OrderItem item) {
@@ -31,13 +31,13 @@ public class Order {
         requireState(State.CREATED);
 
         orderState = State.SUBMITTED;
-        subbmitionDate = fakeClock.getDate();
+        subbmitionDate = clock.getDate();
 
     }
 
     public void confirm() {
         requireState(State.SUBMITTED);
-        int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, fakeClock.getDate())
+        int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, clock.getDate())
                                                .getHours();
         if (hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS) {
             orderState = State.CANCELLED;
@@ -68,7 +68,7 @@ public class Order {
 
     }
 
-    public static enum State {
+    public enum State {
         CREATED,
         SUBMITTED,
         CONFIRMED,

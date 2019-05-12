@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-public class FakeClock {
+public class Clock {
 
     public List<DateTime> returnDates;
 
-    public FakeClock() {
+    public Clock() {
         this.returnDates = new ArrayList<>();
     }
 
